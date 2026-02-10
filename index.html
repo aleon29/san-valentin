@@ -2,84 +2,164 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Una pregunta especial</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>San Valentín</title>
+
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: #ffe6f0;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: #ffffff;
+      width: 90%;
+      max-width: 360px;
+      padding: 26px 22px;
+      border-radius: 22px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.2);
       text-align: center;
-      padding-top: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .photo-frame {
+      position: relative;
+      padding: 10px;
+      border-radius: 20px;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          #ff6b81,
+          #ff6b81 10px,
+          #ffb6c1 10px,
+          #ffb6c1 20px
+        );
+      margin-bottom: 18px;
+    }
+
+    .photo-frame::before {
+      content: "💖 💕 💖 💕 💖";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 18px;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      border-radius: 14px;
+      display: block;
     }
 
     h1 {
-      color: #d63384;
+      font-size: 20px;
+      color: #333;
+      margin-bottom: 14px;
+      line-height: 1.3;
     }
 
-    img {
-      width: 250px;
-      margin: 20px 0;
+    .emoji {
+      font-size: 64px;
+      margin: 18px 0;
     }
 
-    .botones {
-      position: relative;
-      height: 150px;
+    p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.4;
     }
 
     button {
+      width: 100%;
+      padding: 14px;
       font-size: 18px;
-      padding: 12px 25px;
       border: none;
-      border-radius: 10px;
+      border-radius: 14px;
       cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .yes {
+      background: #e63946;
+      color: white;
+    }
+
+    .no {
+      background: #f1f1f1;
+      color: #555;
       position: absolute;
-    }
-
-    #si {
-      background-color: #28a745;
-      color: white;
-      left: 40%;
-    }
-
-    #no {
-      background-color: #dc3545;
-      color: white;
-      left: 55%;
+      left: 22px;
+      right: 22px;
     }
   </style>
 </head>
+
 <body>
 
-  <h1 id="pregunta">¿Le gustaría ser mi San Valentín?</h1>
+  <div class="card" id="card">
 
-  <!-- IMAGEN INICIAL -->
-  <img id="imagen" src="https://i.imgur.com/8Km9tLL.png" alt="emoción">
+    <div class="photo-frame">
+      <img src="foto.jpg" alt="Nuestro momento">
+    </div>
 
-  <div class="botones">
-    <button id="si" onclick="respuestaSi()">Sí</button>
-    <button id="no" onmouseover="moverNo()" ontouchstart="moverNo()">No</button>
+    <h1>
+      👑 Mi princesa,<br>
+      ¿le gustaría ser mi<br>
+      <strong>SAN VALENTÍN</strong>? ❤️
+    </h1>
+
+    <button class="yes" onclick="respuestaSi()">Sí 💘</button>
+    <button class="no" id="noBtn"
+      onmouseover="moverNo()"
+      ontouchstart="moverNo()"
+      onclick="respuestaNo()"
+    >
+      No 🤍
+    </button>
   </div>
 
   <script>
     function respuestaSi() {
-      document.getElementById("pregunta").innerText =
-        "Me hace muy feliz su respuesta 💖\nPor favor haga una captura y envíemela por WhatsApp.";
+      document.getElementById("card").innerHTML = `
+        <div class="emoji">😊💖</div>
+        <h1>Me hizo muy feliz</h1>
+        <p>
+          Gracias por decir que sí 🥰<br><br>
+          <strong>Haga una captura</strong> de esta pantalla<br>
+          y envíemela por WhatsApp.
+        </p>
+      `;
+    }
 
-      document.getElementById("imagen").src =
-        "https://i.imgur.com/1XKQy9F.png"; // feliz
-
-      document.querySelector(".botones").style.display = "none";
+    function respuestaNo() {
+      document.getElementById("card").innerHTML = `
+        <div class="emoji">🥺💔</div>
+        <h1>¿Está segura, mi Anita?</h1>
+        <p>
+          Está bien, solo quería preguntarle con cariño 🤍
+        </p>
+      `;
     }
 
     function moverNo() {
-      const noBtn = document.getElementById("no");
-      const maxX = window.innerWidth - 120;
-      const maxY = 300;
+      const btn = document.getElementById("noBtn");
+      const card = document.getElementById("card");
+
+      const maxX = card.clientWidth - btn.offsetWidth - 20;
+      const maxY = card.clientHeight - btn.offsetHeight - 20;
 
       const x = Math.random() * maxX;
       const y = Math.random() * maxY;
 
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
+      btn.style.left = x + "px";
+      btn.style.top = y + "px";
     }
   </script>
 
